@@ -1,7 +1,7 @@
 # Target-Business-Analysis
 Measure business impact on retailer, Target by analyzing data and creating new features
 
-This project demonstrates how SQL can be used to extract business insights and create key performance indicators (KPIs) from a dataset related to retail performance. The dataset focuses on customer behavior, sales patterns, and operational efficiency for a retailer. By leveraging SQL queries, I analyzed the data to drive insights and actionable recommendations.
+This project demonstrates how SQL can be used to extract business insights and create key performance indicators (KPIs) from a dataset related to retail performance. The dataset focuses on customer behavior, sales patterns, and operational efficiency for a retailer. By leveraging SQL queries, the data wasa anlyzed to drive insights and actionable recommendations.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -50,19 +50,19 @@ The dataset contains several key fields such as:
 - **Metric Analyzed**: Order distribution by time of day.
 - **Insight**: 60% of orders are placed between 1 PM and 6 PM, with lower activity during dawn hours.
 - **Action**: Focused marketing efforts on peak hours.
-- **Result**: Conversion rates increased by 10%, contributing to an additional $500,000 in daily revenue.
+- **Result**: Conversion rates increased by 10%, contributing to an additional revenue.
 
 ### 3. Regional Customer Distribution
 - **Metric Analyzed**: Customer distribution by state/region.
 - **Insight**: 40% of customers are concentrated in São Paulo, while Roraima has the lowest customer base.
 - **Action**: Allocated marketing resources to high-density regions.
-- **Result**: Customer acquisition in São Paulo increased by 15%, generating an additional $1 million in revenue.
+- **Result**: Customer acquisition in São Paulo increased by 15%, generating an additional revenue.
 
 ### 4. Delivery Efficiency
 - **Metric Analyzed**: Shipping costs and delivery delays.
 - **Insight**: Shipping costs were reduced by 10% and late deliveries by 25%.
 - **Action**: Optimized delivery schedules and routes.
-- **Result**: Achieved a cost savings of $200,000 annually.
+- **Result**: Achieved a cost savings annually.
 
 ## Skills Demonstrated
 - Data extraction and manipulation using SQL.
