@@ -3,59 +3,73 @@
 
 
 
-#Q.Import the dataset and do usual exploratory analysis steps like checking the structure & characteristics of the dataset
+#Q.Do exploratory analysis steps like checking the structure & characteristics of the dataset
 
 
 #Q.1.1   Data type of all columns in the "customers" table
 
-select * from `target`.INFORMATION_SCHEMA.TABLES;
+SELECT * FROM `target`.INFORMATION_SCHEMA.TABLES;
 
-select column_name,data_type
-from `target`.INFORMATION_SCHEMA.COLUMNS
-where table_name= 'customers';
+SELECT column_name,data_type
+FROM `target`.INFORMATION_SCHEMA.COLUMNS
+WHERE table_name= 'customers';
 
 #Q.1.2   Get the time range between which the orders were placed.
 
-select 
-min(order_purchase_timestamp) as mintime,
-max(order_purchase_timestamp) as maxtime,
-from `target.orders`;
+SELECT 
+min(order_purchase_timestamp) as first_date,
+max(order_purchase_timestamp) as last_date,
+FROM `target.orders`;
 
 #Q.1.3   Count the number of Cities and States in our dataset.
 
-select 
-count(distinct geolocation_city) as NoOfCities, 
-count(distinct geolocation_state) as NoOfStates
-from `target.geolocation`;
+SELECT 
+COUNT(DISTINCT geolocation_city) AS NoOfCities, 
+COUNT(DISTINCT geolocation_state) AS NoOfStates
+FROM `target.geolocation`;
 
 ---or
 
-with cte as 
+WITH cte AS 
 (
-select 
-geolocation_city as city,
-geolocation_state as state
-from `target.geolocation`
-group by geolocation_city,geolocation_state
+SELECT
+geolocation_city AS city,
+geolocation_state AS state
+FROM `target.geolocation`
+GROUP BY geolocation_city,geolocation_state
 
-union all
+UNION ALL
 
-select 
-customer_city as city,
-customer_state as state
-from `target.customers` 
+SELECT
+customer_city AS city,
+customer_state AS state
+FROM `target.customers` 
 
-union all
+UNION ALL
 
-select
-seller_city as city,
-seller_state as state 
-from `target.sellers`
+SELECT
+seller_city AS city,
+seller_state AS state 
+FROM `target.sellers`
 )
 
-select count(distinct city) as no_of_city,
-count(distinct state) as no_of_State
-from cte;
+SELECT COUNT(DISTINCT city) AS no_of_city,
+COUNT(DISTINCT state) AS no_of_State
+FROM cte;
+
+#Q.1.4 Find out from which states & cities orders were placed.
+
+SELECT
+  DISTINCT c.customer_state , c.customer_city
+FROM
+  `target.customers` c
+RIGHT JOIN
+  `target.orders` o
+USING
+  (customer_id)
+ORDER BY
+  c.customer_state , c.customer_city;
+ 
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,9 +78,10 @@ from cte;
 
 #  2.1    Is there a growing trend in the no. of orders placed over the past years?
 
--- if no. of orders placed has increased gradually in each month, over the years bcuz 2016 incomplete , 2018 sept only 1 order...so go for orders monthwise....
+-- if no. of orders placed has increased gradually in each month, over the years because 2016 is incomplete , 2018 sept has only 1 order placed,so go for orders monthwise....
 
-select * from `target.orders`;
+SELECT *
+FROM `target.orders`;
 --- mistake
 select distinct period,total_orders,Growth_trend from (
 select 
@@ -623,7 +638,7 @@ from `target.orders`
 group by order_status;
 
 
---b)	Count the total orders based on product category?
+--b)	Count the total orders based on product category.
 
 
 select product_category,
@@ -635,16 +650,16 @@ group by product_category
 order by 2 desc
 
 
---c) calculate the average review score for each product ?
+--c) Calculate the average review score for each product.
 
-select product_category, round(avg(review_score),2)as avg_rating
-from `target.order_reviews`rw
-join `target.order_items`oi on oi.order_id=rw.order_id
-join `target.products`p on p.product_id=oi.product_id
-group by 1
+SELECT product_category, round(avg(review_score),2) AS avg_rating
+FROM `target.order_reviews`rw
+JOIN `target.order_items`oi ON oi.order_id = rw.order_id
+JOIN `target.products`p on p.product_id = oi.product_id
+GROUP BY 1
 
 
-select 
-count(distinct customer_city) as city,
-count(distinct customer_state) as state
-from `target.customers` 
+SELECT 
+COUNT(DISTINCT customer_city) AS city,
+COUNT(distinct customer_state) AS state
+FROM `target.customers` 
